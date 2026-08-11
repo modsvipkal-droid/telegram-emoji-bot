@@ -92,26 +92,27 @@ def emoji_detector_handler(message: types.Message):
         text = message.caption
         entities = message.caption_entities
 
+    # Agar text ya entities nahi hain, silently ignore karo
     if not text or not entities:
-        bot.reply_to(message, "⚠️ No custom emojis detected. Send a message containing Telegram Premium custom emojis.")
         return
 
     html_text, has_custom_emoji = extract_and_format_custom_emojis(text, entities)
 
+    # Agar message mein custom emoji nahi hai, silently ignore karo
     if not has_custom_emoji:
-        bot.reply_to(message, "⚠️ No custom emojis detected in this message.")
         return
 
     # Cache result temporarily with a short UUID
     cache_id = str(uuid.uuid4())[:8]
     CACHE[cache_id] = html_text
 
-    # Build 4 format buttons
+    # Build 4 format buttons with Telegram API Latest Style: style="success" (Green Color)
     markup = types.InlineKeyboardMarkup(row_width=2)
-    btn_php = types.InlineKeyboardButton("PHP", callback_data=f"fmt:php:{cache_id}")
-    btn_python = types.InlineKeyboardButton("Python", callback_data=f"fmt:python:{cache_id}")
-    btn_md = types.InlineKeyboardButton("Markdown", callback_data=f"fmt:markdown:{cache_id}")
-    btn_aiogram = types.InlineKeyboardButton("aiogram", callback_data=f"fmt:aiogram:{cache_id}")
+    btn_php = types.InlineKeyboardButton("PHP", callback_data=f"fmt:php:{cache_id}", style="success")
+    btn_python = types.InlineKeyboardButton("Python", callback_data=f"fmt:python:{cache_id}", style="success")
+    btn_md = types.InlineKeyboardButton("Markdown", callback_data=f"fmt:markdown:{cache_id}", style="success")
+    btn_aiogram = types.InlineKeyboardButton("aiogram", callback_data=f"fmt:aiogram:{cache_id}", style="success")
+    
     markup.add(btn_php, btn_python, btn_md, btn_aiogram)
 
     response = (
