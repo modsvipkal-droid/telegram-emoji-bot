@@ -123,29 +123,29 @@ def emoji_detector_handler(message: types.Message):
     cache_id = str(uuid.uuid4())[:8]
     CACHE[cache_id] = html_text
 
-    # Custom Emojis + Green Style Buttons
+    # Buttons with ONLY Premium Custom Emojis (No normal unicode emojis in text)
     markup = types.InlineKeyboardMarkup(row_width=2)
     
     btn_php = types.InlineKeyboardButton(
-        "💤 PHP", 
+        "PHP", 
         callback_data=f"fmt:php:{cache_id}", 
         style="success", 
         icon_custom_emoji_id="5774138454896022007"
     )
     btn_python = types.InlineKeyboardButton(
-        "🖥 Python", 
+        "Python", 
         callback_data=f"fmt:python:{cache_id}", 
         style="success", 
         icon_custom_emoji_id="4985626654563894116"
     )
     btn_md = types.InlineKeyboardButton(
-        "🔎 Markdown", 
+        "Markdown", 
         callback_data=f"fmt:markdown:{cache_id}", 
         style="success", 
         icon_custom_emoji_id="5893382531037794941"
     )
     btn_aiogram = types.InlineKeyboardButton(
-        "⭐️ aiogram", 
+        "aiogram", 
         callback_data=f"fmt:aiogram:{cache_id}", 
         style="success", 
         icon_custom_emoji_id="5893494861612455015"
