@@ -65,9 +65,9 @@ def get_total_users() -> int:
 def start_handler(message: types.Message):
     register_user(message.from_user)
     
-    # Updated Premium Emoji Welcome Message
+    # Premium Emoji Welcome Message
     welcome_msg = (
-        '<tg-emoji emoji-id="4963233485356533176">👋</tg-emoji><tg-emoji emoji-id="6053229479944264545">✨</tg-emoji> Welcome to EmojiPackfindBot!\n\n'
+        '<tg-emoji emoji-id="4963233485356533176">👋</tg-emoji><tg-emoji emoji-id="6053229479944264545">✨</tg-emoji> Welcome to Custom EmojiPackfindBot!\n\n'
         '<tg-emoji emoji-id="6053400522721859262">🗑</tg-emoji> Convert Telegram Premium Custom Emojis into clean, copyable code instantly. <tg-emoji emoji-id="6053229479944264545">✨</tg-emoji>\n\n'
         '<tg-emoji emoji-id="6052991826518873591">📌</tg-emoji> How to use: <tg-emoji emoji-id="6052964261418769099">💬</tg-emoji>\n'
         '<tg-emoji emoji-id="6053193097276298985">✉️</tg-emoji> Send or forward any message containing custom emojis — <tg-emoji emoji-id="6053193097276298985">✉️</tg-emoji> Text • <tg-emoji emoji-id="6053142399482339205">🔔</tg-emoji> Photo • <tg-emoji emoji-id="6023660287968678279">🎬</tg-emoji> Video • <tg-emoji emoji-id="6311831672744580735">💥</tg-emoji> Animation • <tg-emoji emoji-id="5258477770735885832">📄</tg-emoji> Document\n\n'
@@ -112,7 +112,7 @@ def emoji_detector_handler(message: types.Message):
     cache_id = str(uuid.uuid4())[:8]
     CACHE[cache_id] = html_text
 
-    # Build 4 format buttons with Telegram API Latest Style: style="success" (Green Color)
+    # Telegram Bot API Latest Style: Sabhi buttons ke liye style="success" (Green Color)
     markup = types.InlineKeyboardMarkup(row_width=2)
     btn_php = types.InlineKeyboardButton("PHP", callback_data=f"fmt:php:{cache_id}", style="success")
     btn_python = types.InlineKeyboardButton("Python", callback_data=f"fmt:python:{cache_id}", style="success")
@@ -121,7 +121,7 @@ def emoji_detector_handler(message: types.Message):
     
     markup.add(btn_php, btn_python, btn_md, btn_aiogram)
 
-    # Updated Premium Custom Emoji Message
+    # Premium Custom Emoji Response Message
     response = (
         '<tg-emoji emoji-id="6052973985224728368">💥</tg-emoji> <b>Custom Emojis Detected!</b> <tg-emoji emoji-id="6053030296540946080">🎉</tg-emoji>\n\n'
         '<tg-emoji emoji-id="6052991826518873591">📌</tg-emoji> Select your preferred language/framework to generate the code. <tg-emoji emoji-id="6339201691140758295">🛍</tg-emoji>\n\n'
