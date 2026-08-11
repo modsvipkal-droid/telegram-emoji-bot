@@ -123,7 +123,7 @@ def emoji_detector_handler(message: types.Message):
     cache_id = str(uuid.uuid4())[:8]
     CACHE[cache_id] = html_text
 
-    # Buttons with ONLY Premium Custom Emojis (No normal unicode emojis in text)
+    # Buttons with Premium Custom Emojis & Green Style
     markup = types.InlineKeyboardMarkup(row_width=2)
     
     btn_php = types.InlineKeyboardButton(
@@ -177,10 +177,37 @@ def callback_format_handler(call: types.CallbackQuery):
         
         bot.answer_callback_query(call.id)
         
+        # Headers with Custom Emojis for each format
+        headers = {
+            "markdown": (
+                '<tg-emoji emoji-id="5256131095094652290">🎯</tg-emoji> Code is Ready! <tg-emoji emoji-id="6181329095750589575">✨</tg-emoji>\n\n'
+                '<tg-emoji emoji-id="6314482200142157650">🤖</tg-emoji> MARKDOWN  • Generated Successfully <tg-emoji emoji-id="6269163801178804220">✅</tg-emoji>\n'
+                '<tg-emoji emoji-id="5197269100878907942">✍️</tg-emoji> Copy &amp; Use <tg-emoji emoji-id="6053202116707622090">✔️</tg-emoji>'
+            ),
+            "python": (
+                '<tg-emoji emoji-id="5256131095094652290">🎯</tg-emoji> Code is Ready! <tg-emoji emoji-id="6181329095750589575">✨</tg-emoji>\n\n'
+                '<tg-emoji emoji-id="6314482200142157650">🤖</tg-emoji> PYTHON • Generated Successfully <tg-emoji emoji-id="6269163801178804220">✅</tg-emoji>\n'
+                '<tg-emoji emoji-id="5197269100878907942">✍️</tg-emoji> Copy &amp; Use <tg-emoji emoji-id="6053202116707622090">✔️</tg-emoji>'
+            ),
+            "php": (
+                '<tg-emoji emoji-id="5256131095094652290">🎯</tg-emoji> Code is Ready! <tg-emoji emoji-id="6181329095750589575">✨</tg-emoji>\n\n'
+                '<tg-emoji emoji-id="6314482200142157650">🤖</tg-emoji> PHP • Generated Successfully <tg-emoji emoji-id="6269163801178804220">✅</tg-emoji>\n'
+                '<tg-emoji emoji-id="5197269100878907942">✍️</tg-emoji> Copy &amp; Use <tg-emoji emoji-id="6053202116707622090">✔️</tg-emoji>'
+            ),
+            "aiogram": (
+                '<tg-emoji emoji-id="5256131095094652290">🎯</tg-emoji> Code is Ready! <tg-emoji emoji-id="6181329095750589575">✨</tg-emoji>\n\n'
+                '<tg-emoji emoji-id="6314482200142157650">🤖</tg-emoji> AIOGRAM • Generated Successfully <tg-emoji emoji-id="6269163801178804220">✅</tg-emoji>\n'
+                '<tg-emoji emoji-id="5197269100878907942">✍️</tg-emoji> Copy &amp; Use <tg-emoji emoji-id="6053202116707622090">✔️</tg-emoji>'
+            )
+        }
+        
+        header = headers.get(format_type, f"<b>{format_type.upper()} Code Snippet:</b>")
+        full_message = f"{header}\n\n{code_snippet}"
+        
         bot.send_message(
             chat_id=call.message.chat.id,
-            text=f"<code>{format_type.upper()} Code Snippet:</code>\n\n{code_snippet}",
-            parse_mode="Markdown"
+            text=full_message,
+            parse_mode="HTML"
         )
     except Exception as e:
         bot.answer_callback_query(call.id, f"Error: {str(e)}", show_alert=True)
