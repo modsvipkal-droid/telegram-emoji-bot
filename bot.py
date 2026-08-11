@@ -81,7 +81,7 @@ def start_handler(message: types.Message):
     
     # Premium Emoji Welcome Message (Caption text)
     welcome_msg = (
-        '<tg-emoji emoji-id="4963233485356533176">👋</tg-emoji><tg-emoji emoji-id="6053229479944264545">✨</tg-emoji> Welcome to Custom EmojiPackfindBot!\n\n'
+        '<tg-emoji emoji-id="4963233485356533176">👋</tg-emoji><tg-emoji emoji-id="6053229479944264545">✨</tg-emoji> Welcome to EmojiPackfindBot!\n\n'
         '<tg-emoji emoji-id="6053400522721859262">🗑</tg-emoji> Convert Telegram Premium Custom Emojis into clean, copyable code instantly. <tg-emoji emoji-id="6053229479944264545">✨</tg-emoji>\n\n'
         '<tg-emoji emoji-id="6052991826518873591">📌</tg-emoji> How to use: <tg-emoji emoji-id="6052964261418769099">💬</tg-emoji>\n'
         '<tg-emoji emoji-id="6053193097276298985">✉️</tg-emoji> Send or forward any message containing custom emojis — <tg-emoji emoji-id="6053193097276298985">✉️</tg-emoji> Text • <tg-emoji emoji-id="6053142399482339205">🔔</tg-emoji> Photo • <tg-emoji emoji-id="6023660287968678279">🎬</tg-emoji> Video • <tg-emoji emoji-id="6311831672744580735">💥</tg-emoji> Animation • <tg-emoji emoji-id="5258477770735885832">📄</tg-emoji> Document\n\n'
