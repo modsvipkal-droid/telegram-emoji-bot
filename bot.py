@@ -210,6 +210,7 @@ def callback_format_handler(call: types.CallbackQuery):
             parse_mode="HTML"
         )
     except Exception as e:
+        print(f"Error in callback: {e}")
         bot.answer_callback_query(call.id, f"Error: {str(e)}", show_alert=True)
 
 
