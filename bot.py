@@ -115,9 +115,12 @@ def emoji_detector_handler(message: types.Message):
     
     markup.add(btn_php, btn_python, btn_md, btn_aiogram)
 
+    # Updated Premium Custom Emoji Message
     response = (
-        "✅ <b>Custom Emojis Detected!</b>\n\n"
-        "Select your preferred language/framework code format below:"
+        '<tg-emoji emoji-id="6052973985224728368">💥</tg-emoji> <b>Custom Emojis Detected!</b> <tg-emoji emoji-id="6053030296540946080">🎉</tg-emoji>\n\n'
+        '<tg-emoji emoji-id="6052991826518873591">📌</tg-emoji> Select your preferred language/framework to generate the code. <tg-emoji emoji-id="6339201691140758295">🛍</tg-emoji>\n\n'
+        '━━━━━━━━━━━━━━━━━━\n'
+        '<tg-emoji emoji-id="6053202116707622090">✔️</tg-emoji> Choose an option below <tg-emoji emoji-id="6338899694810307622">🗣️</tg-emoji>'
     )
     bot.reply_to(message, response, reply_markup=markup)
 
