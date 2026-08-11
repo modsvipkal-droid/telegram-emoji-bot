@@ -17,6 +17,15 @@ if not BOT_TOKEN:
 
 bot = telebot.TeleBot(BOT_TOKEN, parse_mode="HTML")
 
+# Ensure pyTelegramBotAPI always transmits 'style' in JSON payload to Telegram Bot API
+orig_to_dict = types.InlineKeyboardButton.to_dict
+def patched_to_dict(self):
+    d = orig_to_dict(self)
+    if hasattr(self, 'style') and self.style:
+        d['style'] = self.style
+    return d
+types.InlineKeyboardButton.to_dict = patched_to_dict
+
 # Temp directory verify/create
 os.makedirs("temp", exist_ok=True)
 
@@ -112,7 +121,7 @@ def emoji_detector_handler(message: types.Message):
     cache_id = str(uuid.uuid4())[:8]
     CACHE[cache_id] = html_text
 
-    # Telegram Bot API Latest Style: Sabhi buttons ke liye style="success" (Green Color)
+    # Sabhi buttons par sirf style="success" (Green Color)
     markup = types.InlineKeyboardMarkup(row_width=2)
     btn_php = types.InlineKeyboardButton("PHP", callback_data=f"fmt:php:{cache_id}", style="success")
     btn_python = types.InlineKeyboardButton("Python", callback_data=f"fmt:python:{cache_id}", style="success")
