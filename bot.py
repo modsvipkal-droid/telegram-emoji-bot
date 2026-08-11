@@ -17,12 +17,14 @@ if not BOT_TOKEN:
 
 bot = telebot.TeleBot(BOT_TOKEN, parse_mode="HTML")
 
-# Ensure pyTelegramBotAPI always transmits 'style' in JSON payload to Telegram Bot API
+# Ensure pyTelegramBotAPI always transmits 'style' and 'icon_custom_emoji_id' in JSON payload
 orig_to_dict = types.InlineKeyboardButton.to_dict
 def patched_to_dict(self):
     d = orig_to_dict(self)
     if hasattr(self, 'style') and self.style:
         d['style'] = self.style
+    if hasattr(self, 'icon_custom_emoji_id') and self.icon_custom_emoji_id:
+        d['icon_custom_emoji_id'] = self.icon_custom_emoji_id
     return d
 types.InlineKeyboardButton.to_dict = patched_to_dict
 
@@ -121,12 +123,33 @@ def emoji_detector_handler(message: types.Message):
     cache_id = str(uuid.uuid4())[:8]
     CACHE[cache_id] = html_text
 
-    # Sabhi buttons par sirf style="success" (Green Color)
+    # Custom Emojis + Green Style Buttons
     markup = types.InlineKeyboardMarkup(row_width=2)
-    btn_php = types.InlineKeyboardButton("PHP", callback_data=f"fmt:php:{cache_id}", style="success")
-    btn_python = types.InlineKeyboardButton("Python", callback_data=f"fmt:python:{cache_id}", style="success")
-    btn_md = types.InlineKeyboardButton("Markdown", callback_data=f"fmt:markdown:{cache_id}", style="success")
-    btn_aiogram = types.InlineKeyboardButton("aiogram", callback_data=f"fmt:aiogram:{cache_id}", style="success")
+    
+    btn_php = types.InlineKeyboardButton(
+        "💤 PHP", 
+        callback_data=f"fmt:php:{cache_id}", 
+        style="success", 
+        icon_custom_emoji_id="5774138454896022007"
+    )
+    btn_python = types.InlineKeyboardButton(
+        "🖥 Python", 
+        callback_data=f"fmt:python:{cache_id}", 
+        style="success", 
+        icon_custom_emoji_id="4985626654563894116"
+    )
+    btn_md = types.InlineKeyboardButton(
+        "🔎 Markdown", 
+        callback_data=f"fmt:markdown:{cache_id}", 
+        style="success", 
+        icon_custom_emoji_id="5893382531037794941"
+    )
+    btn_aiogram = types.InlineKeyboardButton(
+        "⭐️ aiogram", 
+        callback_data=f"fmt:aiogram:{cache_id}", 
+        style="success", 
+        icon_custom_emoji_id="5893494861612455015"
+    )
     
     markup.add(btn_php, btn_python, btn_md, btn_aiogram)
 
