@@ -12,6 +12,9 @@ load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 ADMIN_ID = int(os.getenv("ADMIN_ID", "0"))
 
+# Start command Video Link / Telegram File ID
+START_VIDEO = "https://t.me/postkalmoda/8"
+
 if not BOT_TOKEN:
     raise ValueError("BOT_TOKEN is missing in .env file!")
 
@@ -76,9 +79,9 @@ def get_total_users() -> int:
 def start_handler(message: types.Message):
     register_user(message.from_user)
     
-    # Premium Emoji Welcome Message
+    # Premium Emoji Welcome Message (Caption text)
     welcome_msg = (
-        '<tg-emoji emoji-id="4963233485356533176">👋</tg-emoji><tg-emoji emoji-id="6053229479944264545">✨</tg-emoji> Welcome to EmojiPackfindBot!\n\n'
+        '<tg-emoji emoji-id="4963233485356533176">👋</tg-emoji><tg-emoji emoji-id="6053229479944264545">✨</tg-emoji> Welcome to Custom EmojiPackfindBot!\n\n'
         '<tg-emoji emoji-id="6053400522721859262">🗑</tg-emoji> Convert Telegram Premium Custom Emojis into clean, copyable code instantly. <tg-emoji emoji-id="6053229479944264545">✨</tg-emoji>\n\n'
         '<tg-emoji emoji-id="6052991826518873591">📌</tg-emoji> How to use: <tg-emoji emoji-id="6052964261418769099">💬</tg-emoji>\n'
         '<tg-emoji emoji-id="6053193097276298985">✉️</tg-emoji> Send or forward any message containing custom emojis — <tg-emoji emoji-id="6053193097276298985">✉️</tg-emoji> Text • <tg-emoji emoji-id="6053142399482339205">🔔</tg-emoji> Photo • <tg-emoji emoji-id="6023660287968678279">🎬</tg-emoji> Video • <tg-emoji emoji-id="6311831672744580735">💥</tg-emoji> Animation • <tg-emoji emoji-id="5258477770735885832">📄</tg-emoji> Document\n\n'
@@ -86,7 +89,22 @@ def start_handler(message: types.Message):
         '<tg-emoji emoji-id="5226639745106330551">🧠</tg-emoji> Get your code instantly!<tg-emoji emoji-id="6312147825287239190">‼️</tg-emoji>\n\n'
         '<tg-emoji emoji-id="4994496741282677708">🖥</tg-emoji> Developer: @kal_mods <tg-emoji emoji-id="6338899694810307622">🗣️</tg-emoji>'
     )
-    bot.reply_to(message, welcome_msg)
+    
+    try:
+        # Send video with welcome message in Caption
+        bot.send_video(
+            chat_id=message.chat.id,
+            video=START_VIDEO,
+            caption=welcome_msg,
+            parse_mode="HTML"
+        )
+    except Exception as e:
+        print(f"Error sending video, falling back to text: {e}")
+        bot.send_message(
+            chat_id=message.chat.id,
+            text=welcome_msg,
+            parse_mode="HTML"
+        )
 
 
 @bot.message_handler(commands=['stats'])
