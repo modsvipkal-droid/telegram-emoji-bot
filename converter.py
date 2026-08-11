@@ -25,7 +25,7 @@ def extract_and_format_custom_emojis(text: str, entities: list) -> tuple[str, bo
         start_byte = ent.offset * 2
         end_byte = (ent.offset + ent.length) * 2
 
-        # Text chunk before entity (escape HTML special characters)
+        # Text chunk before entity
         if start_byte > last_end:
             before_text = text_utf16[last_end:start_byte].decode('utf-16-le')
             result_parts.append(html.escape(before_text))
@@ -84,11 +84,10 @@ def generate_code_snippet(html_text: str, format_type: str) -> str:
             "```"
         )
     elif format_type == "aiogram":
-        escaped_text = html_text.replace("'", "\\'")
         return (
             "```python\n"
             "from aiogram.enums import ParseMode\n\n"
-            f"text = '{escaped_text}'\n\n"
+            f"text = '{html_text}'\n\n"
             "await message.answer(\n"
             "    text,\n"
             "    parse_mode=ParseMode.HTML,\n"
