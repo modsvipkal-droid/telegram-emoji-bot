@@ -49,12 +49,11 @@ def extract_and_format_custom_emojis(text: str, entities: list) -> tuple[str, bo
 
 def generate_code_snippet(html_text: str, format_type: str) -> str:
     """
-    Selected format type ke base par clean, copyable code generator function.
+    Selected format type ke base par clean, copyable HTML <pre> code block generator.
     """
     if format_type == "php":
         escaped_text = html_text.replace('"', '\\"')
-        return (
-            "```php\n"
+        code = (
             "<?php\n\n"
             f'$text = "{escaped_text}";\n\n'
             "$data = [\n"
@@ -62,36 +61,30 @@ def generate_code_snippet(html_text: str, format_type: str) -> str:
             "    'text' => $text,\n"
             "    'parse_mode' => 'HTML'\n"
             "];\n\n"
-            'file_get_contents("https://api.telegram.org/bot<TOKEN>/sendMessage?" . http_build_query($data));\n'
-            "```"
+            'file_get_contents("https://api.telegram.org/bot<TOKEN>/sendMessage?" . http_build_query($data));'
         )
     elif format_type == "python":
         escaped_text = html_text.replace("'", "\\'")
-        return (
-            "```python\n"
+        code = (
             f"text = '{escaped_text}'\n\n"
             "bot.send_message(\n"
             "    chat_id=chat_id,\n"
             "    text=text,\n"
             "    parse_mode='HTML'\n"
-            ")\n"
-            "```"
+            ")"
         )
     elif format_type == "markdown":
-        return (
-            "```html\n"
-            f"{html_text}\n"
-            "```"
-        )
+        code = html_text
     elif format_type == "aiogram":
-        return (
-            "```python\n"
+        code = (
             "from aiogram.enums import ParseMode\n\n"
             f"text = '{html_text}'\n\n"
             "await message.answer(\n"
             "    text,\n"
             "    parse_mode=ParseMode.HTML,\n"
-            ")\n"
-            "```"
+            ")"
         )
-    return html_text
+    else:
+        code = html_text
+
+    return f"<pre>{html.escape(code)}</pre>"
